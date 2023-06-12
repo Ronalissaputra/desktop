@@ -18,7 +18,7 @@ const Tambah = (props) => {
                   : "inline-block rounded-t-lg border-b-2 p-4"
               }
             >
-              Form ibu hamil
+              Tabel ibu hamil
             </NavLink>
           </li>
           <NavLink
@@ -31,7 +31,7 @@ const Tambah = (props) => {
                 : "inline-block rounded-t-lg border-b-2 p-4"
             }
           >
-            Form anak
+            Tabel anak
           </NavLink>
         </ul>
       </div>

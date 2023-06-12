@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Layout } from "../../components";
 import { Input, Heading, Button, Select } from "../../components";
 import { useFormik } from "formik";
-import { useToast, Spinner } from "@chakra-ui/react";
+import { useToast, Spinner, Radio, RadioGroup, Stack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { reqGetibuhamilFc } from "../../features/ibuhamil/reqGetibuhamilFc";
@@ -133,14 +133,36 @@ const Formanak = () => {
                 label="nama"
                 placeholder="nama"
               />
-              <Input
+              <label className="mb-2 block text-lg font-light text-gray-900">
+                Jenis kelamin
+              </label>
+              <RadioGroup
                 name="jenis_kelamin"
                 value={formik.values.jenis_kelamin}
                 onChange={formik.handleChange}
-                label="jenis kelamin"
-                placeholder="jenis kelamin"
-                type="text"
-              />
+                className="mb-2"
+              >
+                <Stack direction="row">
+                  <Radio
+                    type="radio"
+                    name="jenis_kelamin"
+                    value="Laki-laki"
+                    onChange={formik.handleChange}
+                    checked={formik.values.jenis_kelamin === "Laki-laki"}
+                  >
+                    Laki-laki
+                  </Radio>
+                  <Radio
+                    type="radio"
+                    name="jenis_kelamin"
+                    value="Perempuan"
+                    onChange={formik.handleChange}
+                    checked={formik.values.jenis_kelamin === "Perempuan"}
+                  >
+                    Perempuan
+                  </Radio>
+                </Stack>
+              </RadioGroup>
               <Input
                 name="tanggal_lahir"
                 value={formik.values.tanggal_lahir}

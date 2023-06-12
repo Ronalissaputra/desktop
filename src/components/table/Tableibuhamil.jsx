@@ -17,8 +17,8 @@ const Tableibuhamil = ({
   page,
   pages,
   changePage,
-
   refetch,
+  userrole,
 }) => {
   const toast = useToast();
   const { mutate } = useMutation({
@@ -105,6 +105,11 @@ const Tableibuhamil = ({
               <th scope="col" className="px-6 py-3">
                 ID ibuhamil
               </th>
+              {userrole && userrole === "superadmin" && (
+                <th scope="col" className="px-6 py-3">
+                  Mahasiswa pendamping
+                </th>
+              )}
               <th scope="col" className="px-6 py-3">
                 Aksi
               </th>
@@ -117,6 +122,9 @@ const Tableibuhamil = ({
                   <td className="px-6 py-4">{item.nama}</td>
                   <td className="px-6 py-4">{item.nama_suami}</td>
                   <td className="px-6 py-4">{item.customId}</td>
+                  {userrole && userrole === "superadmin" && (
+                    <td className="px-6 py-4">{item.Admin.nama}</td>
+                  )}
                   <td className="flex items-center gap-3 py-4">
                     <Link to={`/detail/ibuhamil/${item.uuid}`}>
                       <BiDetail className="text-2xl text-blue-500" />

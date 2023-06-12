@@ -10,7 +10,7 @@ const Select = ({ label, name, value, onChange, options }) => {
         name={name}
         value={value}
         onChange={onChange}
-        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 sm:text-base"
         required
       >
         <option value="">Pilih nama ibu</option>

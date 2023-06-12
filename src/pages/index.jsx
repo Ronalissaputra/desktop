@@ -17,6 +17,7 @@ import Notfound from "./notfound/Notfound";
 import Detailibuhamil from "./detail/Detailibuhamil";
 import Editibuhamil from "./edit/Editibuhamil";
 import Formanak from "./tambah/Formanak";
+import Formibuhamil from "./tambah/Formibuhamil";
 
 export {
   Notfound,
@@ -31,4 +32,5 @@ export {
   Pemantauannifas,
   Editibuhamil,
   Formanak,
+  Formibuhamil,
 };

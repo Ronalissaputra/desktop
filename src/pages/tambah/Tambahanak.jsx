@@ -26,7 +26,6 @@ const Tambahanak = () => {
       setData(data.response);
     },
   });
-  console.log(data);
 
   const changePage = ({ selected }) => {
     setPage(selected);

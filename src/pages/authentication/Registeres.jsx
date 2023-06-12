@@ -22,7 +22,7 @@ const Registeres = () => {
         title: "Success",
         description: "Register success",
         status: "success",
-        position: "bottom-right",
+        position: "top",
         duration: 4000,
         isClosable: true,
       });
@@ -33,7 +33,7 @@ const Registeres = () => {
         title: "Error",
         description: `${error.response.data.message}`,
         status: "error",
-        position: "bottom-right",
+        position: "top",
         duration: 4000,
         isClosable: true,
       });

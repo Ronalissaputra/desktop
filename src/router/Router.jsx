@@ -12,6 +12,7 @@ import {
   Pemantauannifas,
   Editibuhamil,
   Formanak,
+  Formibuhamil,
 } from "../pages";
 
 const Router = () => {
@@ -34,6 +35,7 @@ const Router = () => {
             <Route path="ibuhamil" element={<Tambahibuhamil />} />
             <Route path="anak" element={<Tambahanak />} />
             <Route path="anak/form" element={<Formanak />} />
+            <Route path="ibuhamil/form" element={<Formibuhamil />} />
           </Route>
           <Route path="detail">
             <Route path="ibuhamil/:uuid" element={<Detailibuhamil />} />

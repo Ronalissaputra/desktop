@@ -110,7 +110,7 @@ const Header = () => {
           </NavLink>
           <div
             ref={btnRef}
-            colorScheme="teal"
+            colorscheme="teal"
             onClick={onOpen}
             className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-500"
           >
@@ -159,7 +159,7 @@ const Header = () => {
 
                   <p
                     ref={btnRef}
-                    colorScheme="teal"
+                    colorscheme="teal"
                     onClick={onOpen}
                     className="rounded-lg bg-red-300 p-4 text-slate-200"
                   >
