@@ -5,10 +5,10 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { BiDetail } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { reqDeleteanak } from "../../features/anak/reqDeleteanak";
+import { reqDeletepemantauankehamilan } from "../../features/pemantauankehamilan/reqDeletepemantauankehamilan";
 import { useToast } from "@chakra-ui/react";
 
-const Tableanak = ({
+const Tablepemantauankehamilan = ({
   onSearch,
   query,
   onChange,
@@ -18,11 +18,12 @@ const Tableanak = ({
   pages,
   changePage,
   refetch,
+  userrole,
 }) => {
   const toast = useToast();
   const { mutate } = useMutation({
-    mutationKey: "reqDeleteanak",
-    mutationFn: reqDeleteanak,
+    mutationKey: "reqDeletepemantauankehamilan",
+    mutationFn: reqDeletepemantauankehamilan,
     onSuccess: () => {
       refetch();
       toast({
@@ -96,14 +97,19 @@ const Tableanak = ({
           <thead className="border-2 bg-gray-50 text-xs uppercase text-gray-700">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Nama
+                Status
               </th>
               <th scope="col" className="px-6 py-3">
-                Jenis Kelamin
+                Nama Ibuhamil
               </th>
               <th scope="col" className="px-6 py-3">
-                Nama ibu
+                ID ibuhamil
               </th>
+              {userrole && userrole === "superadmin" && (
+                <th scope="col" className="px-6 py-3">
+                  Mahasiswa pendamping
+                </th>
+              )}
               <th scope="col" className="px-6 py-3">
                 Aksi
               </th>
@@ -113,14 +119,17 @@ const Tableanak = ({
             {data &&
               data.map((item) => (
                 <tr key={item.id} className="border-b bg-white">
-                  <td className="px-6 py-4">{item.nama}</td>
-                  <td className="px-6 py-4">{item.jenis_kelamin}</td>
+                  <td className="px-6 py-4">{item.status}</td>
                   <td className="px-6 py-4">{item.Ibuhamil.nama}</td>
+                  <td className="px-6 py-4">{item.Ibuhamil.customId}</td>
+                  {userrole && userrole === "superadmin" && (
+                    <td className="px-6 py-4">{item.Admin.nama}</td>
+                  )}
                   <td className="flex items-center gap-3 py-4">
-                    <Link to={`/detail/anak/${item.id}`}>
+                    <Link to={`/detail/ibuhamil/${item.uuid}`}>
                       <BiDetail className="text-2xl text-blue-500" />
                     </Link>
-                    <Link to={`/edit/anak/${item.id}`}>
+                    <Link to={`/edit/ibuhamil/${item.uuid}`}>
                       <BiEdit className="text-2xl text-green-500" />
                     </Link>
                     <Link onClick={() => handleDelete(item.id)}>
@@ -152,4 +161,4 @@ const Tableanak = ({
   );
 };
 
-export default Tableanak;
+export default Tablepemantauankehamilan;

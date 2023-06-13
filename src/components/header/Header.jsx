@@ -8,6 +8,7 @@ import { reqToken } from "../../features/refreshtoken/reqToken";
 import { reqLogout } from "../../features/authentication/reqLogout";
 import icon from "../../assets/icons/Buminglogo.png";
 import { useToast } from "@chakra-ui/react";
+import { FiEdit } from "react-icons/fi";
 import {
   Drawer,
   DrawerBody,
@@ -184,13 +185,22 @@ const Header = () => {
       >
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Hi {nama}</DrawerHeader>
-          <DrawerBody></DrawerBody>
+          <div className="flex items-center">
+            <DrawerCloseButton />
+            <DrawerHeader>
+              <p className="font-light">Hi {nama}</p>
+            </DrawerHeader>
+          </div>
+          <DrawerBody>
+            <div className="flex cursor-pointer items-center gap-4 rounded-md p-2 hover:bg-slate-300">
+              <FiEdit className="text-2xl" />
+              <p className="text-xl font-light">Edit biodata</p>
+            </div>
+          </DrawerBody>
           <DrawerFooter>
             <div
               onClick={() => mutate()}
-              className="flex w-full cursor-pointer items-center space-x-2 rounded-md bg-slate-300 px-2 py-2 hover:bg-slate-400"
+              className="flex w-full cursor-pointer items-center gap-4 rounded-md px-2 py-2 hover:bg-slate-300"
             >
               <GiExitDoor className="text-2xl" />
               <p className="text-xl">Logout</p>

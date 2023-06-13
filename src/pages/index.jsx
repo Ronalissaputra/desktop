@@ -16,8 +16,10 @@ import Profile from "./profile/Profile";
 import Notfound from "./notfound/Notfound";
 import Detailibuhamil from "./detail/Detailibuhamil";
 import Editibuhamil from "./edit/Editibuhamil";
+import Editanak from "./edit/Editanak";
 import Formanak from "./tambah/Formanak";
 import Formibuhamil from "./tambah/Formibuhamil";
+import Formpemantauankehamilan from "./pemantauan/Formpemantauankehamilan";
 
 export {
   Notfound,
@@ -33,4 +35,6 @@ export {
   Editibuhamil,
   Formanak,
   Formibuhamil,
+  Formpemantauankehamilan,
+  Editanak,
 };

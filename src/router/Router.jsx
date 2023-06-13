@@ -13,6 +13,8 @@ import {
   Editibuhamil,
   Formanak,
   Formibuhamil,
+  Formpemantauankehamilan,
+  Editanak,
 } from "../pages";
 
 const Router = () => {
@@ -27,6 +29,10 @@ const Router = () => {
           <Route path="pemantauan">
             <Route index element={<Pemantauankehamilan />} />
             <Route path="kehamilan" element={<Pemantauankehamilan />} />
+            <Route
+              path="kehamilan/formpemantauankehamilan"
+              element={<Formpemantauankehamilan />}
+            />
             <Route path="nifas" element={<Pemantauannifas />} />
             <Route path="anak" element={<Pemantauananak />} />
           </Route>
@@ -42,6 +48,7 @@ const Router = () => {
           </Route>
           <Route path="edit">
             <Route path="ibuhamil/:uuid" element={<Editibuhamil />} />
+            <Route path="anak/:id" element={<Editanak />} />
           </Route>
         </Route>
       </Routes>

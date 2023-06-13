@@ -2,14 +2,17 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useToast, Spinner } from "@chakra-ui/react";
 import { Heading, Input, Button, Layout } from "../../components";
 import { reqGetibuhamilbyid } from "../../features/ibuhamil/reqGetibuhamilbyid";
 import { reqUpdateibuhamil } from "../../features/ibuhamil/reqUpdateibuhamil";
 
 const Editibuhamil = () => {
+  const navigate = useNavigate();
   const { uuid } = useParams();
   const [data, setData] = useState("");
+  const toast = useToast();
 
   useQuery({
     queryKey: ["reqGetibuhamilbyid", uuid],
@@ -19,14 +22,29 @@ const Editibuhamil = () => {
     },
   });
 
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationKey: ["reqUpdateibuhamil", uuid],
-    mutationFn: () => reqUpdateibuhamil(uuid),
-    onSuccess: (res) => {
-      console.log("response", res);
+    mutationFn: (values) => reqUpdateibuhamil(uuid, values),
+    onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Updated success",
+        status: "success",
+        position: "top",
+        duration: 4000,
+        isClosable: true,
+      });
+      navigate("/tambah/ibuhamil");
     },
-    onError: (err) => {
-      console.log(err);
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Updated failed",
+        status: "error",
+        position: "top",
+        duration: 4000,
+        isClosable: true,
+      });
     },
   });
 
@@ -65,7 +83,6 @@ const Editibuhamil = () => {
     },
     onSubmit: (values) => {
       mutate(values);
-      console.log(values);
     },
   });
 
@@ -80,14 +97,14 @@ const Editibuhamil = () => {
               <Input
                 name="nama"
                 value={formik.values.nama}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="nama"
                 placeholder="nama"
               />
               <Input
                 name="umur"
                 value={formik.values.umur}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="umur"
                 placeholder="umur"
                 type="umur"
@@ -95,7 +112,7 @@ const Editibuhamil = () => {
               <Input
                 name="lama_nikah"
                 value={formik.values.lama_nikah}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="lama nikah"
                 placeholder="lama nikah"
                 type="text"
@@ -103,7 +120,7 @@ const Editibuhamil = () => {
               <Input
                 name="suku"
                 value={formik.values.suku}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="suku"
                 placeholder="suku"
                 type="text"
@@ -111,7 +128,7 @@ const Editibuhamil = () => {
               <Input
                 name="agama"
                 value={formik.values.agama}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="agama"
                 placeholder="agama"
                 type="text"
@@ -119,7 +136,7 @@ const Editibuhamil = () => {
               <Input
                 name="pendidikan"
                 value={formik.values.pendidikan}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="pendidikan"
                 placeholder="pendidikan"
                 type="text"
@@ -127,7 +144,7 @@ const Editibuhamil = () => {
               <Input
                 name="pekerjaan"
                 value={formik.values.pekerjaan}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="pekerjaan"
                 placeholder="pekerjaan"
                 type="text"
@@ -135,7 +152,7 @@ const Editibuhamil = () => {
               <Input
                 name="alamat"
                 value={formik.values.alamat}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="alamat"
                 placeholder="alamat"
                 type="text"
@@ -143,7 +160,7 @@ const Editibuhamil = () => {
               <Input
                 name="nomor_hp"
                 value={formik.values.nomor_hp}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="nomor hp"
                 placeholder="nomor hp"
                 type="text"
@@ -151,7 +168,7 @@ const Editibuhamil = () => {
               <Input
                 name="golongan_darah"
                 value={formik.values.golongan_darah}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="golongan darah"
                 placeholder="golongan darah"
                 type="text"
@@ -159,7 +176,7 @@ const Editibuhamil = () => {
               <Input
                 name="nomor_bpjs"
                 value={formik.values.nomor_bpjs}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="nomor bpjs"
                 placeholder="nomor bpjs"
                 type="text"
@@ -167,7 +184,7 @@ const Editibuhamil = () => {
               <Input
                 name="tempat_periksa"
                 value={formik.values.tempat_periksa}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="tempat periksa"
                 placeholder="tempat periksa"
                 type="text"
@@ -180,7 +197,7 @@ const Editibuhamil = () => {
               <Input
                 name="nama_suami"
                 value={formik.values.nama_suami}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="nama suami"
                 placeholder="nama suami"
                 type="text"
@@ -188,7 +205,7 @@ const Editibuhamil = () => {
               <Input
                 name="umur_suami"
                 value={formik.values.umur_suami}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="umur suami"
                 placeholder="umur suami"
                 type="text"
@@ -196,7 +213,7 @@ const Editibuhamil = () => {
               <Input
                 name="agama_suami"
                 value={formik.values.agama_suami}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="agama suami"
                 placeholder="agama suami"
                 type="text"
@@ -204,7 +221,7 @@ const Editibuhamil = () => {
               <Input
                 name="suku_suami"
                 value={formik.values.suku_suami}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="suku suami"
                 placeholder="suku suami"
                 type="text"
@@ -212,7 +229,7 @@ const Editibuhamil = () => {
               <Input
                 name="pendidikan_suami"
                 value={formik.values.pendidikan_suami}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="pendidikan suami"
                 placeholder="pendidikan suami"
                 type="text"
@@ -220,7 +237,7 @@ const Editibuhamil = () => {
               <Input
                 name="pekerjaan_suami"
                 value={formik.values.pekerjaan_suami}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="pekerjaan suami"
                 placeholder="pekerjaan suami"
                 type="text"
@@ -228,7 +245,7 @@ const Editibuhamil = () => {
               <Input
                 name="alamat_suami"
                 value={formik.values.alamat_suami}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="alamat suami"
                 placeholder="alamat suami"
                 type="text"
@@ -236,7 +253,7 @@ const Editibuhamil = () => {
               <Input
                 name="nomorhp_suami"
                 value={formik.values.nomorhp_suami}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="nomorhp suami"
                 placeholder="nomorhp suami"
                 type="text"
@@ -250,7 +267,7 @@ const Editibuhamil = () => {
                 name="hamil_ke"
                 label="hamil ke"
                 value={formik.values.hamil_ke}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 placeholder="hamil ke"
                 type="text"
               />
@@ -258,7 +275,7 @@ const Editibuhamil = () => {
                 name="jumlah_anak"
                 label="jumlah anak"
                 value={formik.values.jumlah_anak}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 placeholder="jumlah anak"
                 type="text"
               />
@@ -268,7 +285,7 @@ const Editibuhamil = () => {
                   name="siklus"
                   label="siklus"
                   value={formik.values.siklus}
-                  onChange={(e) => formik.handleChange(e)}
+                  onChange={formik.handleChange}
                   placeholder="siklus"
                   type="text"
                 />
@@ -276,7 +293,7 @@ const Editibuhamil = () => {
                   name="lama_haid"
                   label="lama haid"
                   value={formik.values.lama_haid}
-                  onChange={(e) => formik.handleChange(e)}
+                  onChange={formik.handleChange}
                   placeholder="lama haid"
                   type="text"
                 />
@@ -284,7 +301,7 @@ const Editibuhamil = () => {
                   name="hptp"
                   label="hptp"
                   value={formik.values.hptp}
-                  onChange={(e) => formik.handleChange(e)}
+                  onChange={formik.handleChange}
                   placeholder="text"
                   type="date"
                 />
@@ -292,7 +309,7 @@ const Editibuhamil = () => {
                   name="hpl"
                   label="Hpl"
                   value={formik.values.hpl}
-                  onChange={(e) => formik.handleChange(e)}
+                  onChange={formik.handleChange}
                   placeholder="hpl"
                   type="date"
                 />
@@ -305,7 +322,7 @@ const Editibuhamil = () => {
               <Input
                 name="email"
                 value={formik.values.email}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="email"
                 placeholder="email"
                 type="text"
@@ -313,7 +330,7 @@ const Editibuhamil = () => {
               <Input
                 name="password"
                 value={formik.values.password}
-                onChange={(e) => formik.handleChange(e)}
+                onChange={formik.handleChange}
                 label="password"
                 placeholder="password"
                 type="text"
@@ -321,7 +338,7 @@ const Editibuhamil = () => {
             </div>
           </div>
         </div>
-        <Button type="submit">Edit</Button>
+        <Button type="submit">{isLoading ? <Spinner /> : "Update"}</Button>
       </form>
     </Layout>
   );

@@ -3,80 +3,120 @@ import { Layout } from "../../components";
 import { Input, Heading, Button, Select } from "../../components";
 import { useFormik } from "formik";
 import { useToast, Spinner, Radio, RadioGroup, Stack } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { reqGetibuhamilFc } from "../../features/ibuhamil/reqGetibuhamilFc";
-import { reqCreateanak } from "../../features/anak/reqCreateanak";
+import { reqGetanakbyid } from "../../features/anak/reqGetanakbyid";
+import { reqUpdateanak } from "../../features/anak/reqUpdateanak";
 
-const Formanak = () => {
+const Editanak = () => {
+  const { id } = useParams();
+  console.log(id);
   const toast = useToast();
   const navigate = useNavigate();
   const [data, setData] = useState("");
+  const [item, setItem] = useState("");
+
+  useQuery({
+    queryKey: ["reqGetanakbyid", id],
+    queryFn: () => reqGetanakbyid(id),
+    onSuccess: (res) => {
+      setItem(res);
+    },
+  });
+
+  const { mutate, isLoading } = useMutation({
+    mutationKey: ["reqUpdateanak", id],
+    mutationFn: (values) => reqUpdateanak(id, values),
+    onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Updated success",
+        status: "success",
+        position: "top",
+        duration: 4000,
+        isClosable: true,
+      });
+      navigate("/tambah/anak");
+    },
+    onerror: () => {
+      toast({
+        title: "Error",
+        description: "Updated failed",
+        status: "error",
+        position: "top",
+        duration: 4000,
+        isClosable: true,
+      });
+    },
+  });
+
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      nama: "",
-      jenis_kelamin: "",
-      tanggal_lahir: "",
-      anak_ke: "",
-      keadaan_umum: "",
-      kesadaran: "",
-      kondisi_saat_lahir: "",
-      tekanan_darah: "",
-      suhu: "",
-      dja: "",
-      hr: "",
-      rr: "",
-      saturasi_o2: "",
-      capilary_refill: "",
-      bb: "",
-      pb: "",
-      lila: "",
-      lk: "",
-      ld: "",
-      apperance: "",
-      pulse: "",
-      grimace: "",
-      activity: "",
-      respiration: "",
-      kepala: "",
-      uub: "",
-      mata: "",
-      tht: "",
-      mulut: "",
-      thorax: "",
-      abdomen: "",
-      tali_pusat: "",
-      punggung: "",
-      genetalia: "",
-      anus: "",
-      ekstermitas: "",
-      kulit: "",
-      moro: "",
-      rooting: "",
-      sucking: "",
-      swallowing: "",
-      wallking: "",
-      graphs: "",
-      babinski: "",
-      tonicneck: "",
-      miksi: "",
-      defekasi: "",
-      laboratorium: "",
-      usg: "",
-      rontgen: "",
-      terapi: "",
-      perawatan_talipusat: "",
-      imd: "",
-      vitamin_k1: "",
-      imunisasi_hepatitis: "",
-      salep: "",
-      kie: "",
-      ppia: "",
-      pemantauan_tumbuh_kembang: "",
-      ibuhamilId: "",
+      nama: item?.nama || "",
+      jenis_kelamin: item?.jenis_kelamin || "",
+      tanggal_lahir: item?.tanggal_lahir || "",
+      anak_ke: item?.anak_ke || "",
+      keadaan_umum: item?.keadaan_umum || "",
+      kesadaran: item?.kesadaran || "",
+      kondisi_saat_lahir: item?.kondisi_saat_lahir || "",
+      tekanan_darah: item?.tekanan_darah || "",
+      suhu: item?.suhu || "",
+      dja: item?.dja || "",
+      hr: item?.hr || "",
+      rr: item?.rr || "",
+      saturasi_o2: item?.saturasi_o2 || "",
+      capilary_refill: item?.capilary_refill || "",
+      bb: item?.bb || "",
+      pb: item?.pb || "",
+      lila: item?.lila || "",
+      lk: item?.lk || "",
+      ld: item?.ld || "",
+      apperance: item?.apperance || "",
+      pulse: item?.pulse || "",
+      grimace: item?.grimace || "",
+      activity: item?.activity || "",
+      respiration: item?.respiration || "",
+      kepala: item?.kepala || "",
+      uub: item?.uub || "",
+      mata: item?.mata || "",
+      tht: item?.tht || "",
+      mulut: item?.mulut || "",
+      thorax: item?.thorax || "",
+      abdomen: item?.abdomen || "",
+      tali_pusat: item?.tali_pusat || "",
+      punggung: item?.punggung || "",
+      genetalia: item?.genetalia || "",
+      anus: item?.anus || "",
+      ekstermitas: item?.ekstermitas || "",
+      kulit: item?.kulit || "",
+      moro: item?.moro || "",
+      rooting: item?.rooting || "",
+      sucking: item?.sucking || "",
+      swallowing: item?.swallowing || "",
+      wallking: item?.wallking || "",
+      graphs: item?.graphs || "",
+      babinski: item?.babinski || "",
+      tonicneck: item?.tonicneck || "",
+      miksi: item?.miksi || "",
+      defekasi: item?.defekasi || "",
+      laboratorium: item?.laboratorium || "",
+      usg: item?.usg || "",
+      rontgen: item?.rontgen || "",
+      terapi: item?.terapi || "",
+      perawatan_talipusat: item?.perawatan_talipusat || "",
+      imd: item?.imd || "",
+      vitamin_k1: item?.vitamin_k1 || "",
+      imunisasi_hepatitis: item?.imunisasi_hepatitis || "",
+      salep: item?.salep || "",
+      kie: item?.kie || "",
+      ppia: item?.ppia || "",
+      pemantauan_tumbuh_kembang: item?.pemantauan_tumbuh_kembang || "",
+      ibuhamilId: item?.ibuhamilId || "",
     },
     onSubmit: async (values) => {
-      await mutate(values);
+      mutate(values);
     },
   });
 
@@ -88,22 +128,6 @@ const Formanak = () => {
     },
   });
 
-  const { mutate, isLoading: create } = useMutation({
-    mutationKey: ["reqCreateanak"],
-    mutationFn: reqCreateanak,
-    onSuccess: () => {
-      toast({
-        title: "Success",
-        description: "Created success",
-        status: "success",
-        position: "top",
-        duration: 4000,
-        isClosable: true,
-      });
-      navigate("/tambah/anak");
-    },
-  });
-
   const options =
     data?.response?.map((item) => ({
       value: item.id,
@@ -112,7 +136,7 @@ const Formanak = () => {
 
   return (
     <Layout>
-      <Heading>Tambah Anak</Heading>
+      <Heading>Edit Data Anak</Heading>
       <form onSubmit={formik.handleSubmit}>
         <div className="grid grid-cols-1 gap-5 rounded-sm border-t-2 border-red-500 pt-2 md:grid-cols-2">
           <div className="rounded-md border-2 p-4">
@@ -663,10 +687,10 @@ const Formanak = () => {
             </div>
           </div>
         </div>
-        <Button type="submit"> {create ? <Spinner /> : "Submit"}</Button>
+        <Button type="submit">{isLoading ? <Spinner /> : "Update"}</Button>
       </form>
     </Layout>
   );
 };
 
-export default Formanak;
+export default Editanak;
