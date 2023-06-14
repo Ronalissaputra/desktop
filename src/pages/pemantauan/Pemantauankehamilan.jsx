@@ -24,7 +24,6 @@ const Pemantauankehamilan = () => {
       setRow(res.totalRows);
       setLimit(res.limit);
       setData(res.response);
-      console.log(res);
     },
   });
 

@@ -43,140 +43,88 @@ const Registeres = () => {
   const formik = useFormik({
     initialValues: {
       nama: "",
-      umur: "",
-      prodi: "",
-      semester: "",
-      nomor_hp: "",
-      alamat: "",
       email: "",
       password: "",
       confPassword: "",
       role: "admin",
     },
-    onSubmit: async (values) => {
-      await mutate(values);
+    onSubmit: (values) => {
+      mutate(values);
     },
   });
 
   return (
-    <div className="flex min-h-screen flex-col justify-center bg-gray-100 sm:py-12">
-      <div className="mx-2 md:mx-60">
-        <h1 className="mb-5 text-center text-2xl font-bold">
-          <p className="text-2xl">Buming</p>
-        </h1>
-        <div className="w-full divide-y divide-gray-200 rounded-lg bg-white shadow">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 px-2 sm:py-12">
+      <div className="xs:p-0 mx-10 w-full md:w-full md:max-w-md">
+        <div className="flex items-center justify-center">
+          <div className="mb-5 flex-row text-center text-2xl font-bold">
+            <p className="text-2xl">Buming</p>
+          </div>
+        </div>
+        <div className="w-auto divide-y divide-gray-200 rounded-lg bg-white shadow">
           <form onSubmit={formik.handleSubmit}>
-            <div className="grid w-full grid-cols-1 gap-4 px-5 py-7 md:grid-cols-2">
-              <div>
+            <div className="px-5 py-7">
+              <Input
+                label="Username"
+                name="nama"
+                value={formik.values.nama}
+                onChange={formik.handleChange}
+                type="text"
+                required
+                placeholder="username"
+              />
+              <Input
+                label="Email"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                type="text"
+                required
+                placeholder="example@gmail.com"
+              />
+              <div className="relative">
                 <Input
-                  label="Nama"
-                  name="nama"
-                  value={formik.values.nama}
+                  label="Password"
+                  name="password"
+                  value={formik.values.password}
                   onChange={formik.handleChange}
-                  type="text"
+                  type={eye1 ? "text" : "password"}
+                  placeholder="password"
                   required
-                  placeholder="nama"
                 />
-                <Input
-                  label="Umur"
-                  name="umur"
-                  value={formik.values.umur}
-                  onChange={formik.handleChange}
-                  type="text"
-                  required
-                  placeholder="umur"
-                />
-                <Input
-                  label="Prodi"
-                  name="prodi"
-                  value={formik.values.prodi}
-                  onChange={formik.handleChange}
-                  type="text"
-                  required
-                  placeholder="prodi"
-                />
-                <Input
-                  label="Semester"
-                  name="semester"
-                  value={formik.values.semester}
-                  onChange={formik.handleChange}
-                  type="text"
-                  required
-                  placeholder="semester"
-                />
-                <Input
-                  label="Nomor hp"
-                  name="nomor_hp"
-                  value={formik.values.nomor_hp}
-                  onChange={formik.handleChange}
-                  type="text"
-                  required
-                  placeholder="nomor hp"
-                />
+                {eye1 ? (
+                  <BsFillEyeFill
+                    onClick={() => setEye1(!eye1)}
+                    className="absolute right-3 top-[50px] cursor-pointer"
+                  />
+                ) : (
+                  <BsFillEyeSlashFill
+                    onClick={() => setEye1(!eye1)}
+                    className="absolute right-3 top-[50px] cursor-pointer"
+                  />
+                )}
               </div>
-              <div>
+              <div className="relative">
                 <Input
-                  label="Alamat"
-                  name="alamat"
-                  value={formik.values.alamat}
+                  label="confirmasi password"
+                  name="confPassword"
+                  value={formik.values.confPassword}
                   onChange={formik.handleChange}
-                  type="text"
+                  type={eye2 ? "text" : "password"}
+                  placeholder="confirmasi password"
                   required
-                  placeholder="alamat"
                 />
-                <Input
-                  label="Email"
-                  name="email"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  type="text"
-                  required
-                  placeholder="example@gmail.com"
-                />
-                <div className="relative">
-                  <Input
-                    label="Password"
-                    name="password"
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    type={eye1 ? "text" : "password"}
-                    required
-                    placeholder="password"
+                {eye2 ? (
+                  <BsFillEyeFill
+                    onClick={() => setEye2(!eye2)}
+                    className="absolute right-3 top-[50px] cursor-pointer"
                   />
-                  {eye1 ? (
-                    <BsFillEyeFill
-                      onClick={() => setEye1(!eye1)}
-                      className="absolute right-3 top-[50px] cursor-pointer"
-                    />
-                  ) : (
-                    <BsFillEyeSlashFill
-                      onClick={() => setEye1(!eye1)}
-                      className="absolute right-3 top-[50px] cursor-pointer"
-                    />
-                  )}
-                </div>
-                <div className="relative">
-                  <Input
-                    label="ConfPassword"
-                    name="confPassword"
-                    value={formik.values.confPassword}
-                    onChange={formik.handleChange}
-                    type={eye2 ? "text" : "password"}
-                    required
-                    placeholder="confpassword"
+                ) : (
+                  <BsFillEyeSlashFill
+                    onClick={() => setEye2(!eye2)}
+                    className="absolute right-3 top-[50px] cursor-pointer"
                   />
-                  {eye2 ? (
-                    <BsFillEyeFill
-                      onClick={() => setEye2(!eye2)}
-                      className="absolute right-3 top-[50px] cursor-pointer"
-                    />
-                  ) : (
-                    <BsFillEyeSlashFill
-                      onClick={() => setEye2(!eye2)}
-                      className="absolute right-3 top-[50px] cursor-pointer"
-                    />
-                  )}
-                </div>
+                )}
               </div>
               <button
                 type="submit"
@@ -191,11 +139,11 @@ const Registeres = () => {
         </div>
         <div>
           <Link
-            to="/"
+            to="/registeres"
             className="right-0 flex cursor-pointer rounded-lg py-4 font-normal text-slate-500"
           >
             <BsArrowLeftShort className="text-2xl" />
-            <p className="ml-1 inline-block">go to login</p>
+            <p className="ml-1">go to register</p>
           </Link>
         </div>
       </div>

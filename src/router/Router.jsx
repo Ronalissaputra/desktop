@@ -14,6 +14,7 @@ import {
   Formanak,
   Formibuhamil,
   Formpemantauankehamilan,
+  Formprofile,
   Editanak,
 } from "../pages";
 
@@ -26,6 +27,7 @@ const Router = () => {
           <Route index element={<Login />} />
           <Route path="registeres" element={<Registeres />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="formprofile/:id" element={<Formprofile />} />
           <Route path="pemantauan">
             <Route index element={<Pemantauankehamilan />} />
             <Route path="kehamilan" element={<Pemantauankehamilan />} />

@@ -61,7 +61,7 @@ const Login = () => {
             <p className="text-2xl">Buming</p>
           </div>
         </div>
-        <div className="w-full divide-y divide-gray-200 rounded-lg bg-white shadow">
+        <div className="w-auto divide-y divide-gray-200 rounded-lg bg-white shadow">
           <form onSubmit={formik.handleSubmit}>
             <div className="px-5 py-7">
               <Input

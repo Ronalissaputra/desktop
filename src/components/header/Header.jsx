@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -27,6 +27,8 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const [scrollUp, setScrollUp] = useState(false);
   const [nama, setNama] = useState("");
+  const [idn, setIdn] = useState("");
+  const [userrole, setUserrole] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
@@ -45,6 +47,8 @@ const Header = () => {
     queryFn: reqToken,
     onSuccess: (res) => {
       setNama(res.decoded.email);
+      setIdn(res.decoded.userId);
+      setUserrole(res.decoded.userrole);
     },
     onError: (error) => {
       navigate("/");
@@ -192,10 +196,15 @@ const Header = () => {
             </DrawerHeader>
           </div>
           <DrawerBody>
-            <div className="flex cursor-pointer items-center gap-4 rounded-md p-2 hover:bg-slate-300">
-              <FiEdit className="text-2xl" />
-              <p className="text-xl font-light">Edit biodata</p>
-            </div>
+            {userrole && userrole === "superadmin" ? null : (
+              <Link
+                to={`/Formprofile/${idn}`}
+                className="flex cursor-pointer items-center gap-4 rounded-md p-2 hover:bg-slate-300"
+              >
+                <FiEdit className="text-2xl" />
+                <p className="text-xl font-light">Edit biodata</p>
+              </Link>
+            )}
           </DrawerBody>
           <DrawerFooter>
             <div
