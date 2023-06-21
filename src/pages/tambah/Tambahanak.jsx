@@ -4,7 +4,7 @@ import Tambah from "./Tambah";
 import { Heading, Tableanak } from "../../components";
 import { reqGetanak } from "../../features/anak/reqGetanak";
 import { Link } from "react-router-dom";
-import { MdOutlineAdd } from "react-icons/md";
+import { MdLibraryAdd } from "react-icons/md";
 
 const Tambahanak = () => {
   const [data, setData] = useState([]);
@@ -43,10 +43,10 @@ const Tambahanak = () => {
         <Heading>Tabel anak</Heading>
         <Link
           to="/tambah/anak/form"
-          className="my-auto flex items-center gap-2 rounded-md bg-indigo-500 p-2 text-lg font-light text-slate-50"
+          className="flex items-center gap-2 rounded-md bg-blue-500 px-2 text-lg text-slate-50"
         >
-          <MdOutlineAdd />
-          Tambah anak
+          <MdLibraryAdd />
+          Tambah
         </Link>
       </div>
       <Tableanak

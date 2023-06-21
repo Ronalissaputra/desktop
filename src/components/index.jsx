@@ -7,6 +7,8 @@ import Select from "./select/Select";
 import Tableibuhamil from "./table/Tableibuhamil";
 import Tableanak from "./table/Tableanak";
 import Tablepemantauankehamilan from "./table/Tablepemantauankehamilan";
+import Daftaribuhamil from "./table/Daftaribuhamil";
+import Tablepemantauannifas from "./table/Tablepemantauannifas";
 
 export {
   Header,
@@ -18,4 +20,6 @@ export {
   Input,
   Button,
   Select,
+  Daftaribuhamil,
+  Tablepemantauannifas,
 };

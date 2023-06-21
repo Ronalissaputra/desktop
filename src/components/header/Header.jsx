@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { AiOutlineCloseCircle } from "react-icons/ai";
-import { HiOutlineMenuAlt4 } from "react-icons/hi";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { reqToken } from "../../features/refreshtoken/reqToken";
 import { reqLogout } from "../../features/authentication/reqLogout";
-import icon from "../../assets/icons/Buminglogo.png";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useToast } from "@chakra-ui/react";
-import { FiEdit } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import icon from "../../assets/icons/Buminglogo.png";
+import { TbEdit } from "react-icons/tb";
+import { GiExitDoor } from "react-icons/gi";
 import {
   Drawer,
   DrawerBody,
@@ -19,28 +18,34 @@ import {
   DrawerCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { GiExitDoor } from "react-icons/gi";
 
 const Header = () => {
-  const toast = useToast();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const [scrollUp, setScrollUp] = useState(false);
+  const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
+  const [navbar, setNavbar] = useState(false);
   const [nama, setNama] = useState("");
   const [idn, setIdn] = useState("");
   const [userrole, setUserrole] = useState("");
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const fixedNav = window.pageYOffset;
-      setScrollUp(fixedNav > 110);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const links = [
+    {
+      id: 1,
+      name: "Dashboard",
+      to: "/dashboard",
+    },
+    {
+      id: 2,
+      name: "Pemantauan",
+      to: "/pemantauan",
+    },
+    {
+      id: 3,
+      name: "Tambah",
+      to: "/tambah",
+    },
+  ];
 
   useQuery({
     queryKey: ["reqToken"],
@@ -50,7 +55,7 @@ const Header = () => {
       setIdn(res.decoded.userId);
       setUserrole(res.decoded.userrole);
     },
-    onError: (error) => {
+    onError: () => {
       navigate("/");
       toast({
         title: "Error",
@@ -75,149 +80,125 @@ const Header = () => {
   });
 
   return (
-    <>
-      <nav
-        id="navbar"
-        className={`sticky top-0 z-50 flex h-20 items-center justify-between bg-white px-2 md:px-28 ${
-          scrollUp
-            ? "border-b border-slate-500 bg-white/40 backdrop-blur-md"
-            : ""
-        }`}
-      >
-        <div className="flex cursor-pointer items-center">
-          <img src={icon} alt="bumingicon" className="h-auto w-16" />
-          <p className="text-2xl">Buming</p>
-        </div>
-        <div className="hidden cursor-pointer items-center text-lg md:flex md:justify-between md:gap-5">
-          <NavLink
-            to="/dashboard"
-            className={({ isActive, isPending }) =>
-              isPending ? "" : isActive ? "text-blue-600" : ""
-            }
-          >
-            Dashboard
-          </NavLink>
-          <NavLink
-            to="/pemantauan"
-            className={({ isActive, isPending }) =>
-              isPending ? "" : isActive ? "text-blue-600" : ""
-            }
-          >
-            Pemantauan
-          </NavLink>
-          <NavLink
-            to="/tambah"
-            className={({ isActive, isPending }) =>
-              isPending ? "" : isActive ? "text-blue-600" : ""
-            }
-          >
-            Tambah
-          </NavLink>
-          <div
-            ref={btnRef}
-            colorscheme="teal"
-            onClick={onOpen}
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-500"
-          >
-            <p className="text-slate-200">{nama && nama[0].toUpperCase()}</p>
-          </div>
-        </div>
-        {open ? (
-          <>
-            <div
-              className={`absolute top-0 min-h-screen w-full cursor-pointer bg-white transition-opacity duration-500 ease-linear md:hidden ${
-                open ? "left-0" : "left-[600px]"
-              } `}
-            >
+    <nav className="sticky top-0 z-50 w-full bg-white shadow">
+      <div className="mx-auto justify-between px-4 md:flex md:items-center md:px-8 lg:max-w-7xl">
+        <div>
+          <div className="flex items-center justify-between py-3 md:block md:py-5">
+            <div className="flex items-center">
+              <img src={icon} alt="icon" className="h-12" />
+              <p className="text-2xl">Buming</p>
+            </div>
+            <div className="md:hidden">
               <button
-                onClick={() => setOpen(!open)}
-                className="absolute right-0 m-4 flex h-10 w-10 items-center justify-center rounded-full bg-slate-300"
+                className="rounded-md p-2 text-gray-700 outline-none focus:border focus:border-gray-400"
+                onClick={() => setNavbar(!navbar)}
               >
-                <AiOutlineCloseCircle className="text-2xl text-slate-700" />
+                {navbar ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                )}
               </button>
-              <div className="flex items-center justify-center text-center">
-                <div className="mt-20 grid grid-rows-1 gap-10 text-3xl">
-                  <NavLink
-                    to="/dashboard"
-                    className={({ isActive, isPending }) =>
-                      isPending ? "" : isActive ? "text-orange-600" : ""
-                    }
-                  >
-                    Dashboard
-                  </NavLink>
-                  <NavLink
-                    to="/pemantauan"
-                    className={({ isActive, isPending }) =>
-                      isPending ? "" : isActive ? "text-orange-600" : ""
-                    }
-                  >
-                    Pemantauan
-                  </NavLink>
-                  <NavLink
-                    to="/tambah"
-                    className={({ isActive, isPending }) =>
-                      isPending ? "" : isActive ? "text-orange-600" : ""
-                    }
-                  >
-                    tambah
-                  </NavLink>
-
-                  <p
-                    ref={btnRef}
-                    colorscheme="teal"
-                    onClick={onOpen}
-                    className="rounded-lg bg-red-300 p-4 text-slate-200"
-                  >
-                    {nama && nama[0].toUpperCase()}
-                  </p>
-                </div>
-              </div>
             </div>
-          </>
-        ) : null}
-        <div className="md:hidden">
-          <button onClick={() => setOpen(!open)}>
-            <HiOutlineMenuAlt4 className="text-3xl" />
-          </button>
-        </div>
-      </nav>
-      <Drawer
-        isOpen={isOpen}
-        placement="right"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <div className="flex items-center">
-            <DrawerCloseButton />
-            <DrawerHeader>
-              <p className="font-light">Hi {nama}</p>
-            </DrawerHeader>
           </div>
-          <DrawerBody>
-            {userrole && userrole === "superadmin" ? null : (
-              <Link
-                to={`/Formprofile/${idn}`}
-                className="flex cursor-pointer items-center gap-4 rounded-md p-2 hover:bg-slate-300"
+        </div>
+        <div>
+          <div
+            className={`mt-8 flex-1 justify-self-center pb-3 md:mt-0 md:block md:pb-0 ${
+              navbar ? "block" : "hidden"
+            }`}
+          >
+            <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
+              {links.map((link) => (
+                <li key={link.id} className="text-gray-600 hover:text-blue-600">
+                  <NavLink
+                    to={link.to}
+                    className={({ isActive, isPending }) =>
+                      isPending ? "" : isActive ? "text-orange-600" : ""
+                    }
+                  >
+                    {link.name}
+                  </NavLink>
+                </li>
+              ))}
+              <li className="text-gray-600 hover:text-blue-600 md:hidden">
+                <p onClick={onOpen}>Profile</p>
+              </li>
+              <div
+                onClick={onOpen}
+                className="hidden h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-indigo-400 md:flex"
               >
-                <FiEdit className="text-2xl" />
-                <p className="text-xl font-light">Edit biodata</p>
-              </Link>
-            )}
-          </DrawerBody>
-          <DrawerFooter>
-            <div
-              onClick={() => mutate()}
-              className="flex w-full cursor-pointer items-center gap-4 rounded-md px-2 py-2 hover:bg-slate-300"
-            >
-              <GiExitDoor className="text-2xl" />
-              <p className="text-xl">Logout</p>
+                <p className="text-xl font-light text-slate-100">
+                  {nama && nama[0].toUpperCase()}
+                </p>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <>
+        <Drawer
+          isOpen={isOpen}
+          placement="right"
+          onClose={onClose}
+          finalFocusRef={btnRef}
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <div className="flex items-center">
+              <DrawerCloseButton />
+              <DrawerHeader>
+                <p className="font-light">Hi {nama}</p>
+              </DrawerHeader>
             </div>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    </>
+            <DrawerBody>
+              {userrole && userrole === "superadmin" ? null : (
+                <NavLink
+                  to={`/Formprofile/${idn}`}
+                  className="flex cursor-pointer items-center gap-4 rounded-md p-2 hover:bg-slate-300"
+                >
+                  <TbEdit className="text-2xl" />
+                  <p className="text-xl font-light">Edit biodata</p>
+                </NavLink>
+              )}
+            </DrawerBody>
+            <DrawerFooter>
+              <div
+                onClick={() => mutate()}
+                className="flex w-full cursor-pointer items-center gap-4 rounded-md px-2 py-2 hover:bg-slate-300"
+              >
+                <GiExitDoor className="text-2xl" />
+                <p className="text-xl">Logout</p>
+              </div>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+      </>
+    </nav>
   );
 };
 

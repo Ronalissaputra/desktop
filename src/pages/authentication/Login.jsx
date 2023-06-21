@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { BsArrowLeftShort } from "react-icons/bs";
 import { useFormik } from "formik";
 import Input from "../../components/input/Input";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { reqLogin } from "../../features/authentication/reqLogin";
 import { reqToken } from "../../features/refreshtoken/reqToken";
-import icon from "../../assets/icons/Buminglogo.png";
 import { Spinner, useToast } from "@chakra-ui/react";
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 
@@ -35,7 +33,7 @@ const Login = () => {
         title: "Error",
         description: `${error.response.data.message}`,
         status: "error",
-        position: "top",
+        position: "bottom-right",
         duration: 4000,
         isClosable: true,
       });
@@ -53,15 +51,10 @@ const Login = () => {
   });
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 px-2 sm:py-12">
-      <div className="xs:p-0 mx-10 w-full md:w-full md:max-w-md">
-        <div className="flex items-center justify-center">
-          <div className="mb-5 flex-row text-center text-2xl font-bold">
-            <img src={icon} alt="bumingicon" className="h-auto w-52" />
-            <p className="text-2xl">Buming</p>
-          </div>
-        </div>
-        <div className="w-auto divide-y divide-gray-200 rounded-lg bg-white shadow">
+    <div className="flex min-h-screen w-full items-center justify-center bg-slate-100">
+      <div>
+        <p className="py-5 text-center text-3xl">Buming</p>
+        <div className="h-auto w-[420px] rounded-md bg-slate-300">
           <form onSubmit={formik.handleSubmit}>
             <div className="px-5 py-7">
               <Input
@@ -103,17 +96,11 @@ const Login = () => {
                   {isLoading ? <Spinner /> : "Login"}
                 </span>
               </button>
+              <div className="flex cursor-pointer pt-4 text-xl font-light">
+                <Link to="/registeres">Register</Link>
+              </div>
             </div>
           </form>
-        </div>
-        <div>
-          <Link
-            to="/registeres"
-            className="right-0 flex cursor-pointer rounded-lg py-4 font-normal text-slate-500"
-          >
-            <BsArrowLeftShort className="text-2xl" />
-            <p className="ml-1">go to register</p>
-          </Link>
         </div>
       </div>
     </div>

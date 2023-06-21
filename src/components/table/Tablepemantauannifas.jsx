@@ -2,12 +2,11 @@ import React from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { reqDeleteibuhamil } from "../../features/ibuhamil/reqDeleteibuhamil";
+import { reqDeletepemantauannifas } from "../../features/pemantauannifas/reqDeletepemantauannifas";
 import {
   Table,
   Thead,
   Tbody,
-  Tag,
   Tr,
   Th,
   Td,
@@ -22,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 
-const Tableibuhamil = ({
+const Tablepemantauannifas = ({
   onSearch,
   query,
   onChange,
@@ -35,8 +34,8 @@ const Tableibuhamil = ({
 }) => {
   const toast = useToast();
   const { mutate } = useMutation({
-    mutationKey: "reqDeleteibuhamil",
-    mutationFn: reqDeleteibuhamil,
+    mutationKey: "reqDeletepemantauannifas",
+    mutationFn: reqDeletepemantauannifas,
     onSuccess: () => {
       refetch();
       toast({
@@ -53,18 +52,18 @@ const Tableibuhamil = ({
         title: "Error",
         description: "Delete failed",
         status: "error",
-        position: "bottom-right",
+        position: "top",
         duration: 4000,
         isClosable: true,
       });
     },
   });
 
-  const handleDelete = async (uuid) => {
+  const handleDelete = async (id) => {
     // eslint-disable-next-line no-restricted-globals
     const req = confirm("apakah anda yakin.?");
     if (req) {
-      await mutate(uuid);
+      await mutate(id);
     }
   };
 
@@ -95,10 +94,10 @@ const Tableibuhamil = ({
             <>
               <Thead>
                 <Tr>
-                  <Th>ID</Th>
-                  <Th>Nama</Th>
-                  <Th>Nama Suami</Th>
-                  <Th>Status</Th>
+                  <Th>Status kunjungan</Th>
+                  <Th>Nama ibuhamil</Th>
+                  <Th>Keadaan umum</Th>
+                  <Th>Kesadaran</Th>
                   <Th w="auto" isNumeric>
                     Aksi
                   </Th>
@@ -108,26 +107,16 @@ const Tableibuhamil = ({
                 {data &&
                   data.map((item) => (
                     <Tr>
-                      <Td>{item.customId}</Td>
-                      <Td>{item.nama}</Td>
-                      <Td>{item.nama_suami}</Td>
-                      <Td>
-                        {item.umur > 22 ? (
-                          <Tag color="whiteAlpha.800" bgColor="red.400">
-                            Beresiko
-                          </Tag>
-                        ) : (
-                          <Tag color="whiteAlpha.800" bgColor="green.500">
-                            Normal
-                          </Tag>
-                        )}
-                      </Td>
+                      <Td>{item.status}</Td>
+                      <Td>{item.Ibuhamil.nama}</Td>
+                      <Td>{item.keadaan_umum}</Td>
+                      <Td>{item.kesadaran}</Td>
                       <Td w="10px" isNumeric>
                         <div className="flex space-x-5">
-                          <Link to={`/edit/ibuhamil/${item.uuid}`}>
+                          <Link to={`/edit/pemantauankehamilan/${item.id}`}>
                             <p className="text-green-600">Edit</p>
                           </Link>
-                          <Link onClick={() => handleDelete(item.uuid)}>
+                          <Link onClick={() => handleDelete(item.id)}>
                             <p className="text-red-600">Delete</p>
                           </Link>
                         </div>
@@ -159,4 +148,4 @@ const Tableibuhamil = ({
   );
 };
 
-export default Tableibuhamil;
+export default Tablepemantauannifas;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { MdOutlineAdd } from "react-icons/md";
+import { MdLibraryAdd } from "react-icons/md";
 import { Heading, Tableibuhamil } from "../../components";
 import { reqGetibuhamil } from "../../features/ibuhamil/reqGetibuhamil";
 import Tambah from "./Tambah";
@@ -11,7 +11,7 @@ const Tambahibuhamil = () => {
   const [pages, setPages] = useState(0);
   const [page, setPage] = useState(0);
   const [row, setRow] = useState(0);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [keyword, setKeyword] = useState("");
   const [query, setQuery] = useState("");
 
@@ -42,10 +42,10 @@ const Tambahibuhamil = () => {
         <Heading>Tabel ibu hamil</Heading>
         <Link
           to="/tambah/ibuhamil/form"
-          className="my-auto flex items-center gap-2 rounded-md bg-indigo-500 p-2 text-lg font-light text-slate-50"
+          className="flex items-center gap-2 rounded-md bg-blue-500 px-2 text-lg text-slate-50"
         >
-          <MdOutlineAdd />
-          Tambah ibuhamil
+          <MdLibraryAdd />
+          Tambah
         </Link>
       </div>
       <Tableibuhamil

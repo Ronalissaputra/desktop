@@ -18,21 +18,8 @@ const Detailibuhamil = () => {
 
   return (
     <Layout>
-      <Heading>Formulir Ibu Hamil</Heading>
-      <p>Name</p>
-      <p>Tempat</p>
-      <div className="relative overflow-x-auto">
-        <table className="w-full text-left text-sm text-gray-500">
-          <tbody className="border-t-2 border-red-400">
-            <tr className="border-b bg-white">
-              <td>nama</td>
-              <td>{data && data.nama}</td>
-              <td>E-mail</td>
-              <td>{data.email}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <Heading>Detail Ibu Hamil</Heading>
+      <p className="text-xl text-indigo-600">Nama : {data && data.nama}</p>
     </Layout>
   );
 };

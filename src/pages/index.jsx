@@ -14,6 +14,8 @@ import Formanak from "./tambah/Formanak";
 import Formibuhamil from "./tambah/Formibuhamil";
 import Formpemantauankehamilan from "./pemantauan/Formpemantauankehamilan";
 import Formprofile from "./profile/Formprofile";
+import Formpemantauannifas from "./pemantauan/Formpemantauannifas";
+import Editpemantauankehamilan from "./edit/Editpemantauankehamilan";
 
 export {
   Notfound,
@@ -32,4 +34,6 @@ export {
   Formpemantauankehamilan,
   Formprofile,
   Editanak,
+  Editpemantauankehamilan,
+  Formpemantauannifas,
 };

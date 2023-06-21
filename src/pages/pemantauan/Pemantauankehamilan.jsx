@@ -11,12 +11,12 @@ const Pemantauankehamilan = () => {
   const [pages, setPages] = useState(0);
   const [page, setPage] = useState(0);
   const [row, setRow] = useState(0);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [keyword, setKeyword] = useState("");
   const [query, setQuery] = useState("");
 
   const { refetch } = useQuery({
-    queryKey: ["reqGetibuhamil", keyword, page, limit],
+    queryKey: ["reqGetpemantauankehamilan", keyword, page, limit],
     queryFn: () => reqGetpemantauankehamilan(keyword, page, limit),
     onSuccess: (res) => {
       setPages(res.totalPage);
@@ -40,13 +40,13 @@ const Pemantauankehamilan = () => {
   return (
     <Pemantauan>
       <div className="flex items-center justify-between">
-        <Heading>Tabel anak</Heading>
+        <Heading>Tabel Pemantauan Kehamilan</Heading>
         <Link
           to="/pemantauan/kehamilan/formpemantauankehamilan"
-          className="my-auto flex items-center gap-2 rounded-md bg-indigo-500 p-2 text-lg font-light text-slate-50"
+          className="flex items-center gap-2 rounded-md bg-blue-500 px-2 text-lg text-slate-50"
         >
           <MdOutlineAdd />
-          Pemantauan Kehamilan
+          Tambah
         </Link>
       </div>
       <Tablepemantauankehamilan

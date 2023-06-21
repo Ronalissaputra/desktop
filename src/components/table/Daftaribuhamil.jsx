@@ -1,8 +1,6 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { reqDeleteibuhamil } from "../../features/ibuhamil/reqDeleteibuhamil";
 import {
   Table,
   Thead,
@@ -13,7 +11,6 @@ import {
   Td,
   TableCaption,
   TableContainer,
-  useToast,
   Input,
   InputGroup,
   InputLeftElement,
@@ -22,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 
-const Tableibuhamil = ({
+const Daftaribuhamil = ({
   onSearch,
   query,
   onChange,
@@ -32,42 +29,8 @@ const Tableibuhamil = ({
   pages,
   changePage,
   refetch,
+  userrole,
 }) => {
-  const toast = useToast();
-  const { mutate } = useMutation({
-    mutationKey: "reqDeleteibuhamil",
-    mutationFn: reqDeleteibuhamil,
-    onSuccess: () => {
-      refetch();
-      toast({
-        title: "Success",
-        description: "Delete success",
-        status: "success",
-        position: "bottom-right",
-        duration: 4000,
-        isClosable: true,
-      });
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Delete failed",
-        status: "error",
-        position: "bottom-right",
-        duration: 4000,
-        isClosable: true,
-      });
-    },
-  });
-
-  const handleDelete = async (uuid) => {
-    // eslint-disable-next-line no-restricted-globals
-    const req = confirm("apakah anda yakin.?");
-    if (req) {
-      await mutate(uuid);
-    }
-  };
-
   return (
     <>
       <form onSubmit={onSearch}>
@@ -99,6 +62,9 @@ const Tableibuhamil = ({
                   <Th>Nama</Th>
                   <Th>Nama Suami</Th>
                   <Th>Status</Th>
+                  {userrole && userrole === "superadmin" ? (
+                    <Th>Mahasiswa Pendamping</Th>
+                  ) : null}
                   <Th w="auto" isNumeric>
                     Aksi
                   </Th>
@@ -111,6 +77,7 @@ const Tableibuhamil = ({
                       <Td>{item.customId}</Td>
                       <Td>{item.nama}</Td>
                       <Td>{item.nama_suami}</Td>
+
                       <Td>
                         {item.umur > 22 ? (
                           <Tag color="whiteAlpha.800" bgColor="red.400">
@@ -122,13 +89,13 @@ const Tableibuhamil = ({
                           </Tag>
                         )}
                       </Td>
+                      {userrole && userrole === "superadmin" ? (
+                        <Td>{item.Admin.email}</Td>
+                      ) : null}
                       <Td w="10px" isNumeric>
                         <div className="flex space-x-5">
-                          <Link to={`/edit/ibuhamil/${item.uuid}`}>
-                            <p className="text-green-600">Edit</p>
-                          </Link>
-                          <Link onClick={() => handleDelete(item.uuid)}>
-                            <p className="text-red-600">Delete</p>
+                          <Link to={`/detail/ibuhamil/${item.uuid}`}>
+                            <p className="text-blue-600">Detail</p>
                           </Link>
                         </div>
                       </Td>
@@ -159,4 +126,4 @@ const Tableibuhamil = ({
   );
 };
 
-export default Tableibuhamil;
+export default Daftaribuhamil;

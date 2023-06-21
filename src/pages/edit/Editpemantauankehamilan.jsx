@@ -5,10 +5,14 @@ import { useFormik } from "formik";
 import { Spinner, useToast } from "@chakra-ui/react";
 import { reqGetibuhamilFc } from "../../features/ibuhamil/reqGetibuhamilFc";
 import { reqCreatepemantauankehamilan } from "../../features/pemantauankehamilan/reqCreatepemantauankehamilan";
-import { useNavigate } from "react-router-dom";
+import { reqGetpemantauankehamilanbyid } from "../../features/pemantauankehamilan/reqGetpemantauankehamilanbyid";
+import { reqUpdatepemantauankehamilan } from "../../features/pemantauankehamilan/reqUpdatepemantauankehamilan";
+import { useNavigate, useParams } from "react-router-dom";
 
-const Formpemantauankehamilan = () => {
+const Editpemantauankehamilan = () => {
+  const { id } = useParams();
   const [data, setData] = useState();
+  const [item, setItem] = useState("");
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -51,66 +55,85 @@ const Formpemantauankehamilan = () => {
     },
   ];
 
+  useQuery({
+    queryKey: ["reqGetpemantauankehamilanbyid"],
+    queryFn: () => reqGetpemantauankehamilanbyid(id),
+    onSuccess: (res) => {
+      setItem(res);
+    },
+  });
+
   const { mutate, isLoading } = useMutation({
-    mutationKey: ["reqCreatepemantauankehamilan"],
-    mutationFn: reqCreatepemantauankehamilan,
+    mutationKey: ["reqUpdatepemantauankehamilan", id],
+    mutationFn: (values) => reqUpdatepemantauankehamilan(id, values),
     onSuccess: () => {
       toast({
         title: "Success",
-        description: "Create success",
+        description: "Updated success",
         status: "success",
         position: "bottom-right",
         duration: 4000,
         isClosable: true,
       });
-      navigate("/pemantauan/kehamilan");
+      navigate("/pemantauan");
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Updated failed",
+        status: "error",
+        position: "bottom-right",
+        duration: 4000,
+        isClosable: true,
+      });
     },
   });
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      status: "",
-      tanggal: "",
-      tempat: "",
-      keluhan: "",
-      pola_makan: "",
-      pola_istrahat: "",
-      pola_seksual: "",
-      aktifitas_fisik: "",
-      tinggi_badan: "",
-      berat_badan: "",
-      lingkaran_lengan_atas: "",
-      tekanan_darah: "",
-      suhu: "",
-      nadi: "",
-      pernafasan: "",
-      conjungtiva: "",
-      sclera: "",
-      udema_wajah: "",
-      kesehatan_gigi_dan_mulut: "",
-      kelenjar_tiroid: "",
-      kelenjar_limfe: "",
-      vena_jugularis: "",
-      payudarah: "",
-      pembesaran_perut: "",
-      luka_bekas_operasi: "",
-      leopold_1: "",
-      leopold_2: "",
-      leopold_3: "",
-      leopold_4: "",
-      ekstermitas: "",
-      kondisi_vulva: "",
-      kadar_haemoglobin: "",
-      protein_urine: "",
-      glukosa_urine: "",
-      hbsag: "",
-      rapid_test_hiv: "",
-      usg: "",
-      pemberian_tablet_tambah_darah: "",
-      status_imunisasi_tt: "",
-      konseling: "",
-      layanan_dokter: "",
-      ibuhamilId: "",
+      status: item?.status || "",
+      tanggal: item.tanggal || "",
+      tempat: item.tempat || "",
+      keluhan: item.keluhan || "",
+      pola_makan: item.pola_makan || "",
+      pola_istrahat: item.pola_istrahat || "",
+      pola_seksual: item.pola_seksual || "",
+      aktifitas_fisik: item.aktifitas_fisik || "",
+      tinggi_badan: item.tinggi_badan || "",
+      berat_badan: item.berat_badan || "",
+      lingkaran_lengan_atas: item.lingkaran_lengan_atas || "",
+      tekanan_darah: item.tekanan_darah || "",
+      suhu: item.suhu || "",
+      nadi: item.nadi || "",
+      pernafasan: item.pernafasan || "",
+      conjungtiva: item.conjungtiva || "",
+      sclera: item.sclera || "",
+      udema_wajah: item.udema_wajah || "",
+      kesehatan_gigi_dan_mulut: item.kesehatan_gigi_dan_mulut || "",
+      kelenjar_tiroid: item.kelenjar_tiroid || "",
+      kelenjar_limfe: item.kelenjar_limfe || "",
+      vena_jugularis: item.vena_jugularis || "",
+      payudarah: item.payudarah || "",
+      pembesaran_perut: item.pembesaran_perut || "",
+      luka_bekas_operasi: item.luka_bekas_operasi || "",
+      leopold_1: item.leopold_1 || "",
+      leopold_2: item.leopold_2 || "",
+      leopold_3: item.leopold_3 || "",
+      leopold_4: item.leopold_4 || "",
+      ekstermitas: item.ekstermitas || "",
+      kondisi_vulva: item.kondisi_vulva || "",
+      kadar_haemoglobin: item.kadar_haemoglobin || "",
+      protein_urine: item.protein_urine || "",
+      glukosa_urine: item.glukosa_urine || "",
+      hbsag: item.hbsag || "",
+      rapid_test_hiv: item.rapid_test_hiv || "",
+      usg: item.usg || "",
+      pemberian_tablet_tambah_darah: item.pemberian_tablet_tambah_darah || "",
+      status_imunisasi_tt: item.status_imunisasi_tt || "",
+      konseling: item.konseling || "",
+      layanan_dokter: item.layanan_dokter || "",
+      ibuhamilId: item.ibuhamilId || "",
     },
     onSubmit: (values) => {
       mutate(values);
@@ -119,7 +142,7 @@ const Formpemantauankehamilan = () => {
 
   return (
     <Layout>
-      <Heading>Pemantauan Kehamilan</Heading>
+      <Heading>Edit Pemantauan Kehamilan</Heading>
       <form onSubmit={formik.handleSubmit}>
         <div className="grid grid-cols-1 gap-5 rounded-sm border-t-2 border-red-500 pt-2 md:grid-cols-2">
           <div className="rounded-md border-2 p-4">
@@ -495,10 +518,10 @@ const Formpemantauankehamilan = () => {
             </div>
           </div>
         </div>
-        <Button type="submit">{isLoading ? <Spinner /> : "Submit"}</Button>
+        <Button type="submit">{isLoading ? <Spinner /> : "Updated"}</Button>
       </form>
     </Layout>
   );
 };
 
-export default Formpemantauankehamilan;
+export default Editpemantauankehamilan;

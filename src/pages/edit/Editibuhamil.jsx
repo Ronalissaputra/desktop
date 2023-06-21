@@ -30,7 +30,7 @@ const Editibuhamil = () => {
         title: "Success",
         description: "Updated success",
         status: "success",
-        position: "top",
+        position: "bottom-right",
         duration: 4000,
         isClosable: true,
       });
@@ -41,7 +41,7 @@ const Editibuhamil = () => {
         title: "Error",
         description: "Updated failed",
         status: "error",
-        position: "top",
+        position: "bottom-right",
         duration: 4000,
         isClosable: true,
       });
@@ -107,7 +107,7 @@ const Editibuhamil = () => {
                 onChange={formik.handleChange}
                 label="umur"
                 placeholder="umur"
-                type="umur"
+                type="number"
               />
               <Input
                 name="lama_nikah"
